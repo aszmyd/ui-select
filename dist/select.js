@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.12.0 - 2015-05-28T07:44:11.360Z
+ * Version: 0.12.0 - 2015-07-08T12:20:03.937Z
  * License: MIT
  */
 
@@ -368,7 +368,16 @@ uis.controller('uiSelectCtrl',
     }
 
     function setPlainItems(items) {
-      ctrl.items = items;
+        var tagsItems = getTagsItems();
+        if(ctrl.search) {
+            ctrl.items = tagsItems.concat(items);
+        } else {
+            ctrl.items = items;
+        }
+    }
+
+    function getTagsItems() {
+        return ctrl.items.filter(function(item) {return item.isTag ? true : false; });
     }
 
     ctrl.setItemsFn = groupByExp ? updateGroups : setPlainItems;
@@ -1440,6 +1449,8 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
             $select.activeIndex = 0;
             $select.items = items;
           });
+        } else if($select.search.length === 0) {
+            $select.items = [];
         }
       });
       function _findCaseInsensitiveDupe(arr) {

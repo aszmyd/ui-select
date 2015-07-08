@@ -351,6 +351,8 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
             $select.activeIndex = 0;
             $select.items = items;
           });
+        } else if($select.search.length === 0) {
+            $select.items = [];
         }
       });
       function _findCaseInsensitiveDupe(arr) {

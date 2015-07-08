@@ -131,7 +131,16 @@ uis.controller('uiSelectCtrl',
     }
 
     function setPlainItems(items) {
-      ctrl.items = items;
+        var tagsItems = getTagsItems();
+        if(ctrl.search) {
+            ctrl.items = tagsItems.concat(items);
+        } else {
+            ctrl.items = items;
+        }
+    }
+
+    function getTagsItems() {
+        return ctrl.items.filter(function(item) {return item.isTag ? true : false; });
     }
 
     ctrl.setItemsFn = groupByExp ? updateGroups : setPlainItems;
